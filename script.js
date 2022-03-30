@@ -74,7 +74,6 @@ async function getProductData(event) {
 function addEventButton() {
   const button = document.querySelectorAll('.item__add');
   button.forEach((element) => element.addEventListener('click', getProductData));
-  // button.forEach((element) => element.addEventListener('click', sumPrices));
 }
 
 async function displaysProducts() {
@@ -105,16 +104,19 @@ function emptyCart() {
   empty.addEventListener('click', removeCartItems);
 }
 
-// function sumPrices({ salePrices }) {
-//   let total;
-//   cartProduct.forEach((product) => {
-//     total += salePrices;
-//   });
-//   return total;
-// }
+function loading() {
+  items.appendChild(createCustomElement('p', 'loading', 'carregando...'));
+}
 
-window.onload = () => {
-  displaysProducts();
+function removeLoading() {
+  const load = document.querySelector('.loading');
+  load.remove();
+}
+
+window.onload = async () => {
+  loading();
+  await displaysProducts();
+  removeLoading();
   getSavedCart();
   emptyCart();
   sumPrices();
